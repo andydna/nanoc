@@ -16,8 +16,12 @@ module Nanoc::Helpers
       if item.identifier.legacy?
         item.children
       else
-        pattern = item.identifier.without_ext + '/*'
-        @items.find_all(pattern)
+        pattern = if item.identifier.to_s =~ %r{^/index[^/]+$}
+                    "/*"
+                  else
+                    item.identifier.without_ext + '/*'
+                  end
+        @items.find_all(pattern) - [item]
       end
     end
   end

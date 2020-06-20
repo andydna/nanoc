@@ -36,6 +36,21 @@ describe Nanoc::Helpers::ChildParent, helper: true do
         expect(subject).to eql([ctx.items['/foo/a.md']])
       end
     end
+
+    context 'full identifier when "/index.*"' do
+      let(:identifier) { Nanoc::Core::Identifier.new('/index.md', type: :full) }
+
+      before do
+        ctx.create_item('abc', {}, Nanoc::Core::Identifier.new('/a.md', type: :full))
+        ctx.create_item('def', {}, Nanoc::Core::Identifier.new('/a/b.md', type: :full))
+        ctx.create_item('xyz', {}, Nanoc::Core::Identifier.new('/bar.md', type: :full))
+        ctx.create_item('xyz', {}, Nanoc::Core::Identifier.new('/a/index.md', type: :full))
+      end
+
+      it 'returns only direct children' do
+        expect(subject).to eql([ctx.items['/a.md'], ctx.items['/bar.md']])
+      end
+    end
   end
 
   describe '#parent_of' do

@@ -8,3 +8,4 @@ coverage/
 /Gemfile.lock
 /doc/yardoc/
 /.vscode/
+.bundle
