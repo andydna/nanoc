@@ -17,10 +17,10 @@ module Nanoc::Helpers
         item.children
       else
         pattern = if item.identifier.to_s =~ %r{^/index[^/]+$}
-                    "/*"
+                    ''
                   else
-                    item.identifier.without_ext + '/*'
-                  end
+                    item.identifier.without_ext
+                  end + '/*'
         @items.find_all(pattern) - [item]
       end
     end
